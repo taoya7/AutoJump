@@ -43,13 +43,14 @@ def get_screenshot():
             # screenshot = cv2.cvtColor(screenshot, cv2.COLOR_RGB2BGR)
             cv2.imwrite(input_filename, screenshot)
     if mode == 'phone':
-        d.screenshot(input_filename)
+        # d.screenshot(input_filename)
+        cv2.imwrite(input_filename, d.screenshot(format='opencv'))
     end_time = time.time()
     print("消耗时间 {}".format(end_time-start_time))
 
 def jump(distance):
     # 设置按压时间,系数为1.35
-    press_time = int(distance * 2.59)
+    press_time = int(distance * 2.59) # 2.59
 
     # 生成随机手机屏幕模拟触摸点,防止成绩无效
     # 生成随机整数(0-9),最终数值为(0-90)
@@ -135,6 +136,8 @@ def get_site(img):
     else: # 错误的情况
         start_point = start(refer)
         print("X: {} - Y: {}".format(point_x, point_y))
+        if len(point_x) == 0:
+            exit()
         if point_x:
             distance = ((start_point[0] - point_x[point_y.index(min(point_y))]) ** 2 + (start_point[1] - min(point_y)) ** 2) ** 0.5
             cv2.line(img, (start_point[0], start_point[1]), (point_x[point_y.index(min(point_y))], min(point_y)), (255, 0, 0), 2, 4)
@@ -168,7 +171,8 @@ if __name__ == "__main__":
         if debug:
             cv2.waitKey(0)
             cv2.destroyAllWindows()
-        isPaas = input("是否继续?")
+        # isPaas = input("是否继续?")
+        time.sleep(0.71)
 
     # Demo2
     # image = cv2.imread('01.png')
